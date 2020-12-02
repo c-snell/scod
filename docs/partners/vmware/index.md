@@ -115,9 +115,7 @@ kubectl create configmap cloud-config --from-file=/etc/kubernetes/vsphere.conf -
 
 Next create the CPI `Secret`.
 
-```markdown
-kubectl create -f-
-```
+
 Copy and paste the following:
 ```markdown
 apiVersion: v1
@@ -129,6 +127,10 @@ stringData:
   192.168.1.30.username: "administrator@vsphere.local"
   192.168.1.30.password: "VMware1!"
 
+```
+
+```markdown
+kubectl create -f secret.yaml
 ```
 
 Press **Enter** and **Ctrl-D**.
@@ -394,9 +396,6 @@ In this example, we will be deploying a stateful MongoDB application with 3 repl
 
 Create the `StorageClass` that will be used for the MongoDB deployment. We will use the Storage Policy created earlier as an example. Make sure to change the Storage Policy name to match your setup.
 
-```markdown
-kubectl create -f- 
-```
 
 Copy and paste the following:
 ```markdown
@@ -411,7 +410,11 @@ parameters:
   storagepolicyname: "primera-default-profile"
   fstype: ext4
 ```
+Creates the StorageClass
+```markdown
+kubectl create -f sc.yaml
 
+```
 Press **Enter** and **Ctrl-D**.
 
 Inspect the `StorageClass` to verify it was created successfully.
@@ -433,13 +436,6 @@ Next create the MongoDB keyfile `Secret`.
 ```markdown
 kubectl create secret generic shared-bootstrap-data --from-file=internal-auth-mongodb-keyfile=mongo_key.txt
 secret/shared-bootstrap-data created
-```
-
-Create the MongoDB `Service` and `StatefulSet`.
-
-
-```markdown
-kubectl create -f- 
 ```
 
 Copy and paste the following:
@@ -523,6 +519,11 @@ spec:
       resources:
         requests:
           storage: 50Gi
+```
+
+Create the MongoDB `Service` and `StatefulSet`.
+```markdown
+kubectl create -f mongodb.yaml 
 ```
 
 Press **Enter** and **Ctrl-D**.
